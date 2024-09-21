@@ -8,11 +8,12 @@ import { NavBar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Proactiv - Social Media Automation | Aceternity Templates",
-  description:
-    "Proactiv is an all in on marketing automation platform that handles emails, tasks tracking, social media management and everything in between.",
+  title: "TOFF OFFICIAL",
+  description: "Landsbergs bekanntester Rapper",
   openGraph: {
-    images: ["https://proactiv-aceternity.vercel.app/banner.png"],
+    images: [
+      "https://i.scdn.co/image/ab6761610000e5ebf8e4aca307e11e6916e26fbe",
+    ],
   },
 };
 
