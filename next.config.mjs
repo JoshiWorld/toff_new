@@ -9,6 +9,7 @@ const nextConfig = {
       { hostname: "unsplash.com" },
       { hostname: "images.unsplash.com" },
       { hostname: "i.pravatar.cc" },
+      { hostname: "i.scdn.co" },
     ],
   },
   pageExtensions: ["ts", "tsx", "mdx"],
