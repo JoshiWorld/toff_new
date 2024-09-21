@@ -13,27 +13,26 @@ export const ContactForm = () => {
       <div>
         <div className="flex">
           <FeatureIconContainer className="flex justify-center items-center overflow-hidden">
-            <IconMailFilled className="h-6 w-6 text-cyan-500" />
+            <IconMailFilled className="h-6 w-6 text-purple-500" />
           </FeatureIconContainer>
         </div>
-        <Heading className="text-left">Contact us</Heading>
+        <Heading className="text-left">Kontakt</Heading>
         <Subheading className="text-left text-neutral-400">
-          We are always looking for ways to improve our products and services.
-          Contact us and let us know how we can help you.
+          Für gewöhnlich beträgt die Antwortzeit bis zu 48h.
         </Subheading>
 
         <div className="text-sm mt-10">
-          <p className="text-sm text-neutral-200">Email</p>
-          <p className="text-sm text-neutral-400">contact@proactiv.ai</p>
+          <p className="text-sm text-neutral-200">E-Mail</p>
+          <p className="text-sm text-neutral-400">toffmgmt@gmx.de</p>
         </div>
-        <div className="text-sm mt-4">
+        {/* <div className="text-sm mt-4">
           <p className="text-sm text-neutral-200">Phone</p>
           <p className="text-sm text-neutral-400">+1 (800) 123 XX21</p>
-        </div>
-        <div className="text-sm mt-4">
+        </div> */}
+        {/* <div className="text-sm mt-4">
           <p className="text-sm text-neutral-200">Support</p>
           <p className="text-sm text-neutral-400">support@proactiv.ai</p>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col items-start gap-4 max-w-2xl w-full mx-auto bg-gradient-to-b from-neutral-900 to-neutral-950 p-10 rounded-3xl relative overflow-hidden">
         <Grid size={20} />
@@ -42,12 +41,12 @@ export const ContactForm = () => {
             className="text-neutral-300 text-sm font-medium mb-2 inline-block"
             htmlFor="name"
           >
-            Full name
+            Name*
           </label>
           <input
             id="name"
             type="text"
-            placeholder="Manu Arora"
+            placeholder="Max Mustermann"
             className="h-10 pl-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
@@ -56,12 +55,12 @@ export const ContactForm = () => {
             className="text-neutral-300 text-sm font-medium mb-2 inline-block"
             htmlFor="email"
           >
-            Email Address
+            Deine E-Mail Adresse*
           </label>
           <input
             id="email"
             type="email"
-            placeholder="contact@aceternity.com"
+            placeholder="max.mustermann@mail.de"
             className="h-10 pl-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
@@ -70,12 +69,12 @@ export const ContactForm = () => {
             className="text-neutral-300 text-sm font-medium mb-2 inline-block"
             htmlFor="company"
           >
-            Company
+            Firma
           </label>
           <input
             id="company"
             type="text"
-            placeholder="contact@aceternity.com"
+            placeholder="Musterfirma"
             className="h-10 pl-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
@@ -84,16 +83,16 @@ export const ContactForm = () => {
             className="text-neutral-300 text-sm font-medium mb-2 inline-block"
             htmlFor="message"
           >
-            Message
+            Anliegen*
           </label>
           <textarea
             id="message"
             rows={5}
-            placeholder="Type your message here"
+            placeholder="Beschreibe dein Anliegen"
             className="pl-4 pt-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
-        <Button variant="muted">Submit</Button>
+        <Button variant="muted">Senden</Button>
       </div>
     </Container>
   );

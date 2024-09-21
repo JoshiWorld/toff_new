@@ -73,7 +73,8 @@ export const DesktopNavbar = ({ navItems }: Props) => {
           Impressum
         </Button> */}
         <Button>
-          <a href="mailto:toffmgmt@gmx.de">Kontakt</a>
+          {/* <a href="mailto:toffmgmt@gmx.de">Kontakt</a> */}
+          <a href="/kontakt">Kontakt</a>
         </Button>
       </div>
     </motion.div>
