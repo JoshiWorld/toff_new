@@ -61,7 +61,7 @@ export const Hero = () => {
         <div className="flex items-center gap-4 justify-center my-10 relative z-10">
           <Button className="flex space-x-2 items-center group !text-lg">
             <span>
-              <a href="https://open.spotify.com/intl-de/artist/35qJJVRDUxWBkMuZhkkCvz?si=WGaGO934R9OctUi1ParVeA">
+              <a href="https://open.spotify.com/artist/35qJJVRDUxWBkMuZhkkCvz?si=WGaGO934R9OctUi1ParVeA">
                 Jetzt hören
               </a>
             </span>{" "}
