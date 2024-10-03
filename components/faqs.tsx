@@ -13,7 +13,6 @@ export const FAQs = () => {
     fetch('/api/public/faq').then((res) => res.json()).then((data) => {
       setData(data);
       setLoading(false);
-      console.log(data);
     })
   }, []);
 
