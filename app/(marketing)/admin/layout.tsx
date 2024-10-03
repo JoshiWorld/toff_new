@@ -8,9 +8,10 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   const [loggedIn, setLoggedIn] = useState(false);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
     fetch("/api/public/user/verify", {
       method: "GET",
       headers: {
@@ -22,9 +23,9 @@ export default function AdminLayout({
       .then((data) => {
         if (data.username) setLoggedIn(true);
       });
-  }, [token]);
+  }, []);
 
-  if (!token || !loggedIn) return <p>Unauthorized</p>;
+  if (!loggedIn) return <p>Unauthorized</p>;
 
   return <div>{children}</div>;
 }

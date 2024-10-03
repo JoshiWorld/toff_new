@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export function LoginWithSocialsAndEmail() {
   return (
@@ -13,6 +14,7 @@ export function LoginWithSocialsAndEmail() {
 }
 
 function Form() {
+  const router = useRouter();
   const [isClicked, setIsClicked] = useState(false);
   const [password, setPassword] = useState("");
 
@@ -32,6 +34,7 @@ function Form() {
 
     if(res.token) {
         localStorage.setItem("token", `Bearer ${res.token}`);
+        router.push('/admin/dashboard');
     } else {
         console.error("Login fehlgeschlagen");
     }
