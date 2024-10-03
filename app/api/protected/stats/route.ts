@@ -40,11 +40,13 @@ export async function PUT(req: Request) {
     const body = await req.json();
     const { _id, platform, stats, goal } = body;
 
-    const result = await db.collection<Stats>(Collections.faq).updateOne(
+    const result = await db.collection<Stats>(Collections.stats).updateOne(
       // @ts-expect-error
       { _id: new ObjectId(_id) }, // Cast _id to ObjectId
       { $set: { platform, stats, goal } }
     );
+
+    console.log(result);
 
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: "Stat not found" }, { status: 404 });
@@ -69,7 +71,7 @@ export async function DELETE(req: Request) {
     const { _id } = await req.json();
 
     const result = await db
-      .collection<Stats>(Collections.faq)
+      .collection<Stats>(Collections.stats)
       // @ts-expect-error
       .deleteOne({ _id: new ObjectId(_id) });
 

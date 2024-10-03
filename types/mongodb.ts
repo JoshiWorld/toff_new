@@ -9,7 +9,7 @@ export interface Live {
   title: string;
   description: string;
   date: Date;
-  link?: string;
+  link: string;
 }
 
 export interface FAQ {
