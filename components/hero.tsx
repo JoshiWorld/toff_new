@@ -11,6 +11,7 @@ import { Subheading } from "./subheading";
 import { VideoModal } from "./video-modal";
 import { FeaturedImages } from "./featured-images";
 import Beam from "./beam";
+
 export const Hero = () => {
   const router = useRouter();
 
