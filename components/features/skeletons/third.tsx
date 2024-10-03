@@ -67,6 +67,7 @@ export const SkeletonThree = () => {
       repeat: Infinity,
       repeatDelay: 1,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="p-8 overflow-hidden h-full relative flex items-center justify-center">

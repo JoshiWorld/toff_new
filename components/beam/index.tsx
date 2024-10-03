@@ -36,11 +36,13 @@ const Beam = ({
     }
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       const meteor = meteorRef.current;
       if (!meteor) return;
       meteor.removeEventListener("animationend", () => {});
       meteor.removeEventListener("animationstart", () => {});
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const restartAnimation = () => {
     const meteor = meteorRef.current;
