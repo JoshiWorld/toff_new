@@ -1,19 +1,46 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Link } from "next-view-transitions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosMenu } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
 import { Button } from "@/components/button";
 import { Logo } from "@/components/logo";
 import { useMotionValueEvent, useScroll } from "framer-motion";
+import React from "react";
 
 export const MobileNavbar = ({ navItems }: any) => {
   const [open, setOpen] = useState(false);
+  const [showBackground, setShowBackground] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    fetch("/api/public/user/verify", {
+      method: "GET",
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.username) setLoggedIn(true);
+      });
+  }, []);
+
+  if (loggedIn) {
+    navItems = [
+      ...navItems,
+      {
+        link: "/admin/dashboard",
+        title: "Admin",
+      },
+    ];
+  }
 
   const { scrollY } = useScroll();
-
-  const [showBackground, setShowBackground] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (value) => {
     if (value > 100) {

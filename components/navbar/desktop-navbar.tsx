@@ -9,7 +9,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "next-view-transitions";
 
 type Props = {
@@ -22,8 +22,34 @@ type Props = {
 
 export const DesktopNavbar = ({ navItems }: Props) => {
   const { scrollY } = useScroll();
-
   const [showBackground, setShowBackground] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    fetch("/api/public/user/verify", {
+      method: "GET",
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.username) setLoggedIn(true);
+      });
+  }, []);
+
+  if(loggedIn) {
+    navItems = [
+      ...navItems,
+      {
+        link: "/admin/dashboard",
+        title: "Admin",
+      },
+    ];
+  }
 
   useMotionValueEvent(scrollY, "change", (value) => {
     if (value > 100) {

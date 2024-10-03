@@ -132,6 +132,25 @@ const FAQItem = ({
     }
   };
 
+  const deleteFAQ = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("/api/protected/faq", {
+      method: "DELETE",
+      body: JSON.stringify({
+        _id: id
+      }),
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 200) {
+      router.push("/admin/dashboard");
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -208,7 +227,10 @@ const FAQItem = ({
             onChange={(e) => setAnswerNew(e.target.value)}
           />
         </div>
-        <Button onClick={updateFAQ}>Speichern</Button>
+        <div className="flex justify-between">
+          <Button variant={"destructive"} onClick={deleteFAQ}>Löschen</Button>
+          <Button onClick={updateFAQ}>Speichern</Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
