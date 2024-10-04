@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Live } from "@/types/mongodb";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
@@ -14,6 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { Live } from "@prisma/client";
 
 export function AdminLiveTable() {
   const router = useRouter();
@@ -75,7 +74,7 @@ export function AdminLiveTable() {
             description={live.description}
             link={live.link}
             date={live.date}
-            id={live._id}
+            id={live.id}
           />
         ))}
       </div>

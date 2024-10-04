@@ -1,14 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Stats } from "@/types/mongodb";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { Stats } from "@prisma/client";
 
 export function AdminStatsTable() {
   const router = useRouter();
@@ -66,7 +65,7 @@ export function AdminStatsTable() {
             platform={stat.platform}
             goal={stat.goal}
             stats={stat.stats}
-            id={stat._id}
+            id={stat.id}
           />
         ))}
       </div>

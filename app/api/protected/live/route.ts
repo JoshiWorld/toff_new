@@ -1,27 +1,22 @@
-import clientPromise from "@/lib/mongodb";
-import { Collections, type Live } from "@/types/mongodb";
 import { NextResponse } from "next/server";
-import { ObjectId } from "mongodb";
+import prisma from "@/lib/prisma";
 
 // Create Live
 export async function POST(req: Request) {
   try {
-    const client = await clientPromise;
-    const db = client.db("toff");
-
     const body = await req.json();
-    const newLive: Omit<Live, "_id"> = {
-      title: body.title,
-      description: body.description,
-      date: body.date,
-      link: body.link
-    };
-
-    const result = await db.collection(Collections.live).insertOne(newLive);
+    const result = await prisma.live.create({
+      data: {
+        title: body.title,
+        description: body.description,
+        date: body.date,
+        link: body.link,
+      },
+    });
 
     return NextResponse.json({
       message: "Live created",
-      id: result.insertedId,
+      id: result.id,
     });
   } catch (error) {
     console.error(error);
@@ -35,19 +30,20 @@ export async function POST(req: Request) {
 // Update Live
 export async function PUT(req: Request) {
   try {
-    const client = await clientPromise;
-    const db = client.db("toff");
-
     const body = await req.json();
     const { _id, title, description, date, link } = body;
 
-    const result = await db.collection<Live>(Collections.live).updateOne(
-      // @ts-expect-error
-      { _id: new ObjectId(_id) }, // Cast _id to ObjectId
-      { $set: { title, description, date, link } }
-    );
+    const result = await prisma.live.update({
+      where: { id: _id },
+      data: {
+        title,
+        description,
+        date,
+        link,
+      },
+    });
 
-    if (result.matchedCount === 0) {
+    if (!result) {
       return NextResponse.json({ error: "Live not found" }, { status: 404 });
     }
 
@@ -64,17 +60,13 @@ export async function PUT(req: Request) {
 // Delete Live
 export async function DELETE(req: Request) {
   try {
-    const client = await clientPromise;
-    const db = client.db("toff");
-
     const { _id } = await req.json();
 
-    const result = await db
-      .collection<Live>(Collections.live)
-      // @ts-expect-error
-      .deleteOne({ _id: new ObjectId(_id) });
+    const result = await prisma.live.delete({
+      where: { id: _id },
+    });
 
-    if (result.deletedCount === 0) {
+    if (!result) {
       return NextResponse.json({ error: "Live not found" }, { status: 404 });
     }
 

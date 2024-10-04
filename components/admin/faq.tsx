@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { FAQ } from "@/types/mongodb";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { FAQ } from "@prisma/client";
 
 export function AdminFAQTable() {
   const router = useRouter();
@@ -62,7 +62,7 @@ export function AdminFAQTable() {
             key={index}
             question={faq.question}
             answer={faq.answer}
-            id={faq._id}
+            id={faq.id}
           />
         ))}
       </div>
