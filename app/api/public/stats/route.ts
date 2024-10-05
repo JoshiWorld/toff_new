@@ -6,7 +6,11 @@ import { Stats } from "@prisma/client";
 export async function GET() {
   try {
     const data: Stats[] = await prisma.stats.findMany();
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

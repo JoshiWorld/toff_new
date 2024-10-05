@@ -6,7 +6,11 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const data: Live[] = await prisma.live.findMany();
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

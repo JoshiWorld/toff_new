@@ -7,7 +7,11 @@ export async function GET() {
   try {
     const data: FAQ[] = await prisma.fAQ.findMany();
     console.log('List of FAQs:', data);
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
