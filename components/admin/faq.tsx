@@ -10,17 +10,21 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { FAQ } from "@prisma/client";
 
-export function AdminFAQTable({ data }: { data: FAQ[] }) {
+export function AdminFAQTable() {
   const router = useRouter();
   const [question, setQeustion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [data, setData] = useState<FAQ[]>([]);
+  const [isLoading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   fetch("/api/public/faq").then((res) => res.json()).then((data) => {
-  //     setData(data);
-  //     setLoading(false);
-  //   })
-  // }, []);
+  useEffect(() => {
+    fetch("/api/public/faq").then((res) => res.json()).then((data) => {
+      setData(data);
+      setLoading(false);
+    })
+  }, []);
+
+  if(isLoading) return <p>Loading...</p>;
 
   const createFAQ = async () => {
     const token = localStorage.getItem("token");
