@@ -6,6 +6,7 @@ import { FAQ } from "@prisma/client";
 export async function GET() {
   try {
     const data: FAQ[] = await prisma.fAQ.findMany();
+    console.log('List of FAQs:', data);
     return NextResponse.json(data);
   } catch (error) {
     console.error(error);
