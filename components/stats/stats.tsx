@@ -120,7 +120,7 @@ function GoalStats({ stats }: { stats: Stats[] }) {
                   <AnimatedNumber value={item.goal} />
                 </p>
               </div>
-              <p className="text-balance text-balance mt-4 text-base text-neutral-300 dark:text-neutral-300">
+              <p className="text-balance mt-4 text-base text-neutral-300 dark:text-neutral-300">
                 {item.platform}
               </p>
             </motion.div>
