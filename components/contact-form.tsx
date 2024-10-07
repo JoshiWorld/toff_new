@@ -8,8 +8,10 @@ import { Grid } from "./features/grid";
 import { FeatureIconContainer } from "./features/feature-icon-container";
 import { IconMailFilled } from "@tabler/icons-react";
 import { Button } from "./ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export const ContactForm = () => {
+  const { toast } = useToast();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -30,7 +32,17 @@ export const ContactForm = () => {
         "Content-Type": "application/json",
       },
     }).then((res) => res.json()).then((data) => {
-      console.log('ERFOLG');
+      if(data.success) {
+        setName("");
+        setEmail("");
+        setCompany("");
+        setContent("");
+        toast({
+          title: "Anfrage gesendet!",
+          description: "Dein Anliegen ist bei uns eingegangen.",
+          variant: "default"
+        });
+      }
     });
   }
 

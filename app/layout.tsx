@@ -6,6 +6,7 @@ import { ViewTransitions } from "next-view-transitions";
 import type { Viewport } from "next";
 import { NavBar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "TOFF OFFICIAL",
@@ -48,6 +49,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </body>
+        <Toaster />
       </html>
     </ViewTransitions>
   );
