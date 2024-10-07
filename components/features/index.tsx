@@ -26,7 +26,7 @@ export const Features = () => {
         </FeatureIconContainer>
         <Heading className="pt-4">Überzeug dich selbst</Heading>
         <Subheading>
-          Die neusten Songs von TOFF, Landsbergs bekanntestem Rapper
+          Die neusten Songs von TOFF
         </Subheading>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 py-10">

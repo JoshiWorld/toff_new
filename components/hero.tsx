@@ -52,7 +52,7 @@ export const Hero = () => {
           TOFF
         </Heading>
         <Subheading className="text-center mt-2 md:mt-6 text-base md:text-xl text-muted dark:text-muted-dark max-w-3xl mx-auto relative z-10">
-          Landsbergs bekanntester Rap-Artist
+          Musik für deine Seele
         </Subheading>
         {/* <FeaturedImages
           textClassName="lg:text-left text-center"
