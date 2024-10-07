@@ -7,9 +7,9 @@ import { Tools } from "@/components/tools";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact | Proactiv | Aceternity Templates",
+  title: "TOFF Kontaktformular",
   description:
-    "Proactiv is an all in on marketing automation platform that handles emails, tasks tracking, social media management and everything in between.",
+    "Hier kannst du uns kontaktieren!",
   openGraph: {
     images: ["https://proactiv-aceternity.vercel.app/banner.png"],
   },

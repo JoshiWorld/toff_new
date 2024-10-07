@@ -4,6 +4,7 @@ import React, { useRef, useState } from "react";
 import { motion, useInView, useSpring, useTransform } from "framer-motion";
 import { useEffect } from "react";
 import { Stats } from "@/types/mongodb";
+import Image from "next/image";
 
 export function StatsWithNumberTicker() {
   const [items, setItems] = useState<Stats[]>([]);
@@ -21,9 +22,19 @@ export function StatsWithNumberTicker() {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="mt-28 relative w-full h-full">
+      <video
+        src="/MUSIC_BACKGROUND.mp4"
+        autoPlay
+        loop
+        muted
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+      />
+
+      <div className="relative z-10 flex flex-col justify-center items-center h-full">
         <CurrentStats stats={items} />
         <GoalStats stats={items} />
+      </div>
     </div>
   );
 }
@@ -36,7 +47,7 @@ function CurrentStats({stats}: {stats: Stats[]}) {
             Aktuelle Statistiken
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-sm text-neutral-200 dark:text-neutral-200 md:text-base">
-            Hier kannst du die aktuellen Statistiken von TOFF beobachten
+            Das sind die aktuellen Statistiken von TOFF
           </p>
           <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4">
             {stats.map((item, index) => (
@@ -63,7 +74,7 @@ function CurrentStats({stats}: {stats: Stats[]}) {
                     <AnimatedNumber value={item.stats} />
                   </p>
                 </div>
-                <p className="text-balance text-balance mt-4 text-base text-neutral-300 dark:text-neutral-300">
+                <p className="text-balance mt-4 text-base text-neutral-300 dark:text-neutral-300">
                   {item.platform}
                 </p>
               </motion.div>
@@ -82,7 +93,7 @@ function GoalStats({ stats }: { stats: Stats[] }) {
           Ziele für {new Date().getFullYear()}
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-center text-sm text-neutral-200 dark:text-neutral-200 md:text-base">
-          Hier kannst du die Ziele für dieses Jahr von TOFF beobachten
+          Das sind die Ziele für dieses Jahr von TOFF
         </p>
         <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4">
           {stats.map((item, index) => (
