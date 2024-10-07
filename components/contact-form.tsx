@@ -1,13 +1,39 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Container } from "./container";
 import { Heading } from "./heading";
 import { Subheading } from "./subheading";
-import { Button } from "./button";
 import { Grid } from "./features/grid";
 import { FeatureIconContainer } from "./features/feature-icon-container";
 import { IconMailFilled } from "@tabler/icons-react";
+import { Button } from "./ui/button";
 
 export const ContactForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [content, setContent] = useState("");
+
+  const sendContact = () => {
+    if(!name || !email || !content) return;
+
+    fetch("/api/public/mail", {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        company: company,
+        content: content,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json()).then((data) => {
+      console.log('ERFOLG');
+    });
+  }
+
   return (
     <Container className="py-40 md:py-60 grid grid-cols-1 md:grid-cols-2 gap-10 px-6">
       <div>
@@ -47,6 +73,8 @@ export const ContactForm = () => {
             id="name"
             type="text"
             placeholder="Max Mustermann"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="h-10 pl-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
@@ -61,6 +89,8 @@ export const ContactForm = () => {
             id="email"
             type="email"
             placeholder="max.mustermann@mail.de"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="h-10 pl-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
@@ -75,6 +105,8 @@ export const ContactForm = () => {
             id="company"
             type="text"
             placeholder="Musterfirma"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
             className="h-10 pl-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
@@ -89,10 +121,12 @@ export const ContactForm = () => {
             id="message"
             rows={5}
             placeholder="Beschreibe dein Anliegen"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
             className="pl-4 pt-4 w-full rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
           />
         </div>
-        <Button variant="muted">Senden</Button>
+        <Button variant="default" onClick={sendContact}>Senden</Button>
       </div>
     </Container>
   );
