@@ -20,14 +20,12 @@ const BUCKET_NAME = process.env.S3_BUCKET_NAME!;
 // Create Merch
 export async function POST(req: Request) {
   try {
-    const { title, description, date, link, frontImage, backImage } = await req.json();
+    const { title, description, frontImage, backImage } = await req.json();
 
     const result = await prisma.merch.create({
       data: {
         title: title as string,
         description: description as string,
-        date: new Date(date as string),
-        link: link as string,
         frontImage: frontImage,
         backImage: backImage,
       },
@@ -57,8 +55,6 @@ export async function PUT(req: Request) {
       data: {
         title,
         description,
-        date,
-        link,
         frontImage,
         backImage,
       },

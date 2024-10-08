@@ -18,8 +18,6 @@ export function AdminMerchTable() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [link, setLink] = useState("");
   const [frontImage, setFrontImage] = useState<File | null>(null);
   const [backImage, setBackImage] = useState<File | null>(null);
   const [data, setData] = useState<Merch[]>([]);
@@ -56,8 +54,6 @@ export function AdminMerchTable() {
       body: JSON.stringify({
         title: title,
         description: description,
-        link: link,
-        date: date.toISOString(),
         frontImage: imageLinks.linkFront,
         backImage: imageLinks.linkBack
       }),
@@ -70,8 +66,6 @@ export function AdminMerchTable() {
     if (res.status === 200) {
       setTitle("");
       setDescription("");
-      setDate(new Date());
-      setLink("");
       setFrontImage(null);
       setBackImage(null);
       router.push("/admin/dashboard");
@@ -81,10 +75,10 @@ export function AdminMerchTable() {
   return (
     <div className="mx-auto grid w-full max-w-7xl gap-4 px-4 py-20 md:px-8 md:py-40">
       <h2 className="text-center text-4xl font-medium tracking-tight text-neutral-600 dark:text-neutral-50 md:text-5xl">
-        Live
+        Merch
       </h2>
       <p className="mx-auto max-w-lg text-center text-base text-neutral-600 dark:text-neutral-50">
-        Hier kannst du deine Live-Blogs bearbeiten
+        Hier kannst du deinen Merch bearbeiten
       </p>
       <div className="mx-auto mt-10 w-full max-w-3xl">
         {data.map((merch, index) => (
@@ -92,8 +86,6 @@ export function AdminMerchTable() {
             key={index}
             title={merch.title}
             description={merch.description}
-            link={merch.link}
-            date={merch.date}
             frontImage={merch.frontImage}
             backImage={merch.backImage}
             id={merch.id}
@@ -123,41 +115,6 @@ export function AdminMerchTable() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-          </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="link">Link</Label>
-            <Input
-              type="text"
-              id="link"
-              placeholder="Link"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-            />
-          </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="date">Datum</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Datum auswählen</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  // @ts-expect-error
-                  onSelect={setDate}
-                />
-              </PopoverContent>
-            </Popover>
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="frontImage">Bild - Vorne</Label>
@@ -196,24 +153,18 @@ const MerchItem = ({
   id,
   title,
   description,
-  link,
-  date,
   frontImage,
   backImage
 }: {
   id: string;
   title: string;
   description: string;
-  link: string;
-  date: Date;
   frontImage: string;
   backImage: string;
 }) => {
   const router = useRouter();
   const [titleNew, setTitleNew] = useState(title);
-  const [linkNew, setLinkNew] = useState(link);
   const [descriptionNew, setDescriptionNew] = useState(description);
-  const [dateNew, setDateNew] = useState(date);
   const [frontImageNew, setFrontImageNew] = useState<File | null>(null);
   const [backImageNew, setBackImageNew] = useState<File | null>(null);
 
@@ -230,9 +181,7 @@ const MerchItem = ({
       body: JSON.stringify({
         _id: id,
         title: titleNew,
-        link: linkNew,
         description: descriptionNew,
-        date: dateNew,
         frontImage: frontImage,
         backImage: backImage,
       }),
@@ -271,9 +220,7 @@ const MerchItem = ({
       body: JSON.stringify({
         _id: id,
         title: titleNew,
-        link: linkNew,
         description: descriptionNew,
-        date: dateNew,
         frontImage: imageLinks.linkFront,
         backImage: imageLinks.linkBack,
       }),
@@ -356,45 +303,6 @@ const MerchItem = ({
             value={descriptionNew}
             onChange={(e) => setDescriptionNew(e.target.value)}
           />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="link">Link</Label>
-          <Input
-            type="text"
-            id="link"
-            placeholder="Link"
-            value={linkNew}
-            onChange={(e) => setLinkNew(e.target.value)}
-          />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="date">Datum</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-[280px] justify-start text-left font-normal",
-                  !dateNew && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {dateNew ? (
-                  format(dateNew, "PPP")
-                ) : (
-                  <span>Datum auswählen</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={dateNew}
-                // @ts-expect-error
-                onSelect={setDateNew}
-              />
-            </PopoverContent>
-          </Popover>
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="frontImage">Bild - Vorne</Label>

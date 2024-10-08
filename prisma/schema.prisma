@@ -29,8 +29,6 @@ model Merch {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  date        DateTime
-  link        String
   frontImage  String
   backImage   String
 
