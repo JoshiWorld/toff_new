@@ -1,5 +1,20 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
+
+const s3 = new S3Client({
+  region: process.env.S3_REGION,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+  },
+});
+
+const BUCKET_NAME = process.env.S3_BUCKET_NAME!;
 
 // Create Live
 export async function POST(req: Request) {
@@ -65,6 +80,20 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { _id } = await req.json();
+    const live = await prisma.live.findFirst({
+      where: {
+        id: _id
+      }
+    });
+
+    const oldImageKey = extractKeyFromUrl(live!.image);
+    const deleteParams = {
+      Bucket: BUCKET_NAME,
+      Key: oldImageKey,
+    };
+    // @ts-expect-error
+    const deleteCommand = new DeleteObjectCommand(deleteParams);
+    await s3.send(deleteCommand);
 
     const result = await prisma.live.delete({
       where: { id: _id },
@@ -82,4 +111,13 @@ export async function DELETE(req: Request) {
       { status: 500 }
     );
   }
+}
+
+function extractKeyFromUrl(url: string) {
+  const urlPattern = new RegExp(
+    `https://${BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/(.*)`
+  );
+  const match = url.match(urlPattern);
+
+  return match ? match[1] : null;
 }
