@@ -5,7 +5,7 @@ import { Heading } from "@/components/heading";
 import { Subheading } from "@/components/subheading";
 import { BlogCard } from "@/components/blog-card";
 import { FeatureIconContainer } from "@/components/features/feature-icon-container";
-import { IconClipboardText } from "@tabler/icons-react";
+import { IconClipboardText, IconDeviceAudioTape, IconMusic } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 // import { truncate } from "@/lib/utils";
@@ -29,7 +29,7 @@ export default async function ArticlesIndex() {
       <Container className="flex flex-col items-center justify-between pb-20">
         <div className="relative z-20 py-10 md:pt-40">
           <FeatureIconContainer className="flex justify-center items-center overflow-hidden">
-            <IconClipboardText className="h-6 w-6 text-purple-500" />
+            <IconMusic className="h-6 w-6 text-purple-500" />
           </FeatureIconContainer>
           <Heading as="h1" className="mt-4">
             Live
