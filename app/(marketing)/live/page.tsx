@@ -64,7 +64,7 @@ export default async function ArticlesIndex() {
                   </p>
 
                   <p className="text-neutral-300 text-sm mt-2 max-w-xl group-hover:text-white transition duration-200">
-                    {format(new Date(live.date), "MMMM dd, yyyy")}
+                    {format(new Date(live.date), "dd. MMMM yyyy")}
                   </p>
                 </div>
               </Link>
