@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.666.0",
     "@headlessui/react": "^2.1.0",
     "@mapbox/rehype-prism": "^0.9.0",
     "@mdx-js/loader": "^3.0.1",
@@ -32,6 +33,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "fast-glob": "^3.3.2",
+    "formidable": "^3.5.1",
     "framer-motion": "^11.2.11",
     "jose": "^5.9.3",
     "jsonwebtoken": "^9.0.2",
@@ -54,12 +56,14 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/formidable": "^3.4.5",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mongodb": "^4.0.6",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.16",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",

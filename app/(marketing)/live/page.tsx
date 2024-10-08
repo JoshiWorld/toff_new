@@ -12,9 +12,9 @@ import Image from "next/image";
 import { format } from "date-fns";
 
 export const metadata: Metadata = {
-  title: "Blog | Proactiv | Aceternity Templates",
+  title: "TOFF Live",
   description:
-    "Everything AI is a platform that provides a wide range of AI tools and services to help you stay on top of your business. Generate images, text and everything else that you need to get your business off the ground.",
+    "Aktuelle Live Einträge über TOFF",
   openGraph: {
     images: ["https://ai-saas-template-aceternity.vercel.app/banner.png"],
   },
@@ -28,14 +28,13 @@ export default async function ArticlesIndex() {
       <Container className="flex flex-col items-center justify-between pb-20">
         <div className="relative z-20 py-10 md:pt-40">
           <FeatureIconContainer className="flex justify-center items-center overflow-hidden">
-            <IconClipboardText className="h-6 w-6 text-cyan-500" />
+            <IconClipboardText className="h-6 w-6 text-purple-500" />
           </FeatureIconContainer>
           <Heading as="h1" className="mt-4">
-            Blog
+            Live
           </Heading>
           <Subheading className="text-center">
-            Discover insightful resources and expert advice from our seasoned
-            team to elevate your knowledge.
+            Du willst Toff Live sehen? Hier gibts schonmal einen kleinen Vorgeschmack!
           </Subheading>
         </div>
 
@@ -46,7 +45,7 @@ export default async function ArticlesIndex() {
         </div>
 
         <div className="w-full py-20">
-          <p className="text-2xl font-bold text-white mb-10">More Posts</p>
+          <p className="text-2xl font-bold text-white mb-10">Mehr Live-Beiträge</p>
 
           <div className="divide-y divide-neutral-800">
             {blogs.slice(3, 6).map((blog, index) => (

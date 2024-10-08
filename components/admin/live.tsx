@@ -20,6 +20,7 @@ export function AdminLiveTable() {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date());
   const [link, setLink] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [data, setData] = useState<Live[]>([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -34,14 +35,28 @@ export function AdminLiveTable() {
 
   const createLive = async () => {
     const token = localStorage.getItem("token");
+    if(!imageFile) return;
+
+    const imageForm = new FormData();
+    imageForm.append("file", imageFile);
+
+    const getImageLink = await fetch("/api/protected/s3", {
+      method: "POST",
+      body: imageForm,
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    const imageLink = await getImageLink.json();
 
     const res = await fetch("/api/protected/live", {
       method: "POST",
       body: JSON.stringify({
         title: title,
         description: description,
-        date: date,
         link: link,
+        date: date.toISOString(),
+        image: imageLink.link
       }),
       headers: {
         Authorization: `${token}`,
@@ -54,6 +69,7 @@ export function AdminLiveTable() {
       setDescription("");
       setDate(new Date());
       setLink("");
+      setImageFile(null);
       router.push("/admin/dashboard");
     }
   };
@@ -136,6 +152,20 @@ export function AdminLiveTable() {
                 />
               </PopoverContent>
             </Popover>
+          </div>
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="image">Bild</Label>
+            <Input
+              type="file"
+              id="image"
+              accept="image/*"
+              onChange={(e) => {
+                console.log(e.target.files);
+                if (e.target.files && e.target.files.length > 0) {
+                  setImageFile(e.target.files[0]);
+                }
+              }}
+            />
           </div>
           <Button onClick={createLive}>Erstellen</Button>
         </DialogContent>

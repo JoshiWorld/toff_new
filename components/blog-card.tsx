@@ -27,7 +27,7 @@ export const BlogCard = ({ blog }: { blog: BlogWithSlug }) => {
         </div>
       )}
       <div className="p-4 md:p-8 group-hover:bg-neutral-900">
-        <p className="text-lg font-bold mb-4">
+        <p className="text-lg text-white font-bold mb-4">
           <Balancer>{blog.title}</Balancer>
         </p>
         <p className="text-left text-sm mt-2 text-muted">
