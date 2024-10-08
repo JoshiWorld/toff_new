@@ -51,6 +51,11 @@ const grid = [
     description: "Hier kannst du deine Fragen & Antworten bearbeiten",
     link: "/admin/faq",
   },
+  {
+    title: "Merch",
+    description: "Hier kannst du deinen Merch bearbeiten",
+    link: "/admin/merch",
+  },
 ];
 
 export const Grid = ({

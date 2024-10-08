@@ -1,6 +1,22 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
+
+const s3 = new S3Client({
+  region: process.env.S3_REGION,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+  },
+});
+
+const BUCKET_NAME = process.env.S3_BUCKET_NAME!;
+
 // Create Merch
 export async function POST(req: Request) {
   try {
@@ -66,6 +82,28 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { _id } = await req.json();
+    const merch = await prisma.merch.findFirst({
+      where: {
+        id: _id,
+      },
+    });
+
+    const oldImageKeyFront = extractKeyFromUrl(merch!.frontImage);
+    const deleteParamsFront = {
+      Bucket: BUCKET_NAME,
+      Key: oldImageKeyFront,
+    };
+    const oldImageKeyBack = extractKeyFromUrl(merch!.backImage);
+    const deleteParamsBack = {
+      Bucket: BUCKET_NAME,
+      Key: oldImageKeyBack,
+    };
+    // @ts-expect-error
+    const deleteCommandFront = new DeleteObjectCommand(deleteParamsFront);
+    await s3.send(deleteCommandFront);
+    // @ts-expect-error
+    const deleteCommandBack = new DeleteObjectCommand(deleteParamsBack);
+    await s3.send(deleteCommandBack);
 
     const result = await prisma.merch.delete({
       where: { id: _id },
@@ -83,4 +121,13 @@ export async function DELETE(req: Request) {
       { status: 500 }
     );
   }
+}
+
+function extractKeyFromUrl(url: string) {
+  const urlPattern = new RegExp(
+    `https://${BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/(.*)`
+  );
+  const match = url.match(urlPattern);
+
+  return match ? match[1] : null;
 }
