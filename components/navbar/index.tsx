@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 const navItems = [
   {
-    title: "Musik",
-    link: "/musik",
+    title: "Merch",
+    link: "/merch",
   },
   {
     title: "Live",
