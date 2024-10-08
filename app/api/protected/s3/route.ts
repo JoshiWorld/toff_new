@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { type NextRequest, NextResponse } from "next/server";
 
 const s3 = new S3Client({
@@ -45,4 +45,59 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    const formData = await req.formData();
+    const file = formData.get("file");
+    const old = formData.get("old");
+
+    if (!file) {
+      return NextResponse.json({ error: "File is required." }, { status: 400 });
+    }
+
+    const oldImageKey = extractKeyFromUrl(old!.toString());
+    const deleteParams = {
+        Bucket: BUCKET_NAME,
+        Key: oldImageKey
+    };
+    // @ts-expect-error
+    const deleteCommand = new DeleteObjectCommand(deleteParams);
+    await s3.send(deleteCommand);
+
+    // @ts-expect-error || file.arrayBuffer() is always there, when a file is delivered
+    const buffer = Buffer.from(await file.arrayBuffer());
+    // @ts-expect-error || its always true
+    const fileName = `live/${Date.now()}-${file.name}`;
+
+    const uploadParams = {
+      Bucket: BUCKET_NAME,
+      Key: `${fileName}`,
+      Body: buffer,
+      ContentType: "image/jpg",
+    };
+
+    const command = new PutObjectCommand(uploadParams);
+    await s3.send(command);
+
+    const link = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${fileName}`;
+
+    return NextResponse.json({ success: true, link }, { status: 200 });
+  } catch (error) {
+    console.error("Error uploading file to S3:", error);
+    return NextResponse.json(
+      { error: "Internal Server error" },
+      { status: 500 }
+    );
+  }
+}
+
+function extractKeyFromUrl(url: string) {
+  const urlPattern = new RegExp(
+    `https://${BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/(.*)`
+  );
+  const match = url.match(urlPattern);
+
+  return match ? match[1] : null; 
 }

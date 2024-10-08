@@ -90,6 +90,7 @@ export function AdminLiveTable() {
             description={live.description}
             link={live.link}
             date={live.date}
+            image={live.image}
             id={live.id}
           />
         ))}
@@ -180,20 +181,28 @@ const LiveItem = ({
   description,
   link,
   date,
+  image
 }: {
   id: string;
   title: string;
   description: string;
   link: string;
   date: Date;
+  image: string;
 }) => {
   const router = useRouter();
   const [titleNew, setTitleNew] = useState(title);
   const [linkNew, setLinkNew] = useState(link);
   const [descriptionNew, setDescriptionNew] = useState(description);
   const [dateNew, setDateNew] = useState(date);
+  const [imageNew, setImageNew] = useState<File | null>(null);
 
   const updateLive = async () => {
+    if(!imageNew) await updateWithoutNewImage();
+    else await updateWithNewImage();
+  };
+
+  const updateWithoutNewImage = async () => {
     const token = localStorage.getItem("token");
 
     const res = await fetch("/api/protected/live", {
@@ -204,6 +213,45 @@ const LiveItem = ({
         link: linkNew,
         description: descriptionNew,
         date: dateNew,
+        image: image,
+      }),
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 200) {
+      router.push("/admin/dashboard");
+    }
+  }
+
+  const updateWithNewImage = async () => {
+    const token = localStorage.getItem("token");
+    if(!imageNew) return;
+
+    const imageForm = new FormData();
+    imageForm.append("file", imageNew);
+    imageForm.append("old", image);
+
+    const getImageLink = await fetch("/api/protected/s3", {
+      method: "PUT",
+      body: imageForm,
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    const imageLink = await getImageLink.json();
+
+    const res = await fetch("/api/protected/live", {
+      method: "PUT",
+      body: JSON.stringify({
+        _id: id,
+        title: titleNew,
+        link: linkNew,
+        description: descriptionNew,
+        date: dateNew,
+        image: imageLink.link,
       }),
       headers: {
         Authorization: `${token}`,
@@ -323,6 +371,20 @@ const LiveItem = ({
               />
             </PopoverContent>
           </Popover>
+        </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="image">Bild</Label>
+          <Input
+            type="file"
+            id="image"
+            accept="image/*"
+            onChange={(e) => {
+              console.log(e.target.files);
+              if (e.target.files && e.target.files.length > 0) {
+                setImageNew(e.target.files[0]);
+              }
+            }}
+          />
         </div>
         <div className="flex justify-between">
           <Button variant={"destructive"} onClick={deleteLive}>
