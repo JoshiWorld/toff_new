@@ -11,6 +11,7 @@ const nextConfig = {
       { hostname: "i.pravatar.cc" },
       { hostname: "i.scdn.co" },
       { hostname: "assets.aceternity.com" },
+      { hostname: "toff-s3.s3.eu-central-1.amazonaws.com" },
     ],
   },
   pageExtensions: ["ts", "tsx", "mdx"],

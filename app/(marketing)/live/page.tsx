@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 // import { truncate } from "@/lib/utils";
 import { format } from "date-fns";
+import prisma from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "TOFF Live",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ArticlesIndex() {
-  let blogs = await getAllBlogs();
+  const items = await prisma.live.findMany();
 
   return (
     <div className="relative overflow-hidden py-20 md:py-0">
@@ -39,8 +40,8 @@ export default async function ArticlesIndex() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full relative z-20">
-          {blogs.slice(0, 3).map((blog, index) => (
-            <BlogCard blog={blog} key={blog.title + index} />
+          {items.slice(0, 3).map((live, index) => (
+            <BlogCard blog={live} key={live.id + index} />
           ))}
         </div>
 
@@ -48,31 +49,24 @@ export default async function ArticlesIndex() {
           <p className="text-2xl font-bold text-white mb-10">Mehr Live-Beiträge</p>
 
           <div className="divide-y divide-neutral-800">
-            {blogs.slice(3, 6).map((blog, index) => (
+            {items.slice(3, 6).map((live, index) => (
               <Link
-                href={`/blog/${blog.slug}`}
-                key={blog.slug + index}
+                href={`/live/${live.id}`}
+                key={live.id + index}
                 className="flex md:flex-row flex-col items-start justify-between md:items-center group py-4"
               >
                 <div>
                   <p className="text-neutral-300 text-lg font-medium group-hover:text-white transition duration-200">
-                    {blog.title}
+                    {live.title}
                   </p>
                   <p className="text-neutral-300 text-sm mt-2 max-w-xl group-hover:text-white transition duration-200">
                     {/* {truncate(blog.description, 80)} */}
                   </p>
 
                   <p className="text-neutral-300 text-sm mt-2 max-w-xl group-hover:text-white transition duration-200">
-                    {format(new Date(blog.date), "MMMM dd, yyyy")}
+                    {format(new Date(live.date), "MMMM dd, yyyy")}
                   </p>
                 </div>
-                <Image
-                  src={blog.author.src}
-                  alt={blog.author.name}
-                  width={40}
-                  height={40}
-                  className="rounded-full md:h-10 md:w-10 h-6 w-6 mt-4 md:mt-0 object-cover"
-                />
               </Link>
             ))}
           </div>

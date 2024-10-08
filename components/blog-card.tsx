@@ -5,13 +5,14 @@ import { Logo } from "./logo";
 import Image from "next/image";
 import Balancer from "react-wrap-balancer";
 import { BlogWithSlug } from "@/lib/blog";
+import { Live } from "@prisma/client";
 // import { truncate } from "@/lib/utils";
 
-export const BlogCard = ({ blog }: { blog: BlogWithSlug }) => {
+export const BlogCard = ({ blog }: { blog: Live }) => {
   return (
     <Link
       className="shadow-derek rounded-3xl group border border-transparent hover:border-neutral-800 w-full hover:bg-neutral-900  overflow-hidden  hover:scale-[1.02] transition duration-200"
-      href={`/blog/${blog.slug}`}
+      href={`/live/${blog.id}`}
     >
       {blog.image ? (
         <BlurImage
@@ -33,16 +34,6 @@ export const BlogCard = ({ blog }: { blog: BlogWithSlug }) => {
         <p className="text-left text-sm mt-2 text-muted">
           {/* {truncate(blog.description, 100)} */}
         </p>
-        <div className="flex space-x-2 items-center  mt-6">
-          <Image
-            src={blog.author.src}
-            alt={blog.author.name}
-            width={20}
-            height={20}
-            className="rounded-full h-5 w-5"
-          />
-          <p className="text-sm font-normal text-muted">{blog.author.name}</p>
-        </div>
       </div>
     </Link>
   );
