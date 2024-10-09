@@ -7,10 +7,10 @@ declare global {
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-const uri: string = process.env.MONGODB_URI!;
+const uri: string = process.env.DATABASE_URL!;
 const options = {};
 
-if (!process.env.MONGODB_URI) {
+if (!process.env.DATABASE_URL) {
   throw new Error("Please add your Mongo URI to .env.local");
 }
 

@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useId } from "react";
 import { useRouter } from "next/navigation";
+import { RouteTracking } from "@prisma/client";
+import { RouteTrackingChart } from "./todayChart";
 
 export function AdminDashboard() {
   const router = useRouter();
@@ -30,6 +32,40 @@ export function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      <RouteViews />
+    </div>
+  );
+}
+
+function RouteViews() {
+  const [data, setData] = useState<RouteTracking[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch("/api/protected/views", {
+      method: "GET",
+      headers: {
+        Authorization: `${token}`
+      }
+    }).then((res) => res.json()).then((data) => {
+      setData(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if(loading) return <p>Loading..</p>;
+  if(!data) return <p>No Data found</p>;
+
+  return (
+    <div className="px-20 pt-10">
+      <div className="flex py-5 justify-center">
+        <h2 className="scroll-m-20 text-white border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+          PageViews
+        </h2>
+      </div>
+      <RouteTrackingChart data={data} />
     </div>
   );
 }

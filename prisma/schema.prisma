@@ -10,8 +10,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider  = "mongodb"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model Live {
@@ -26,7 +27,7 @@ model Live {
 }
 
 model Merch {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
   frontImage  String
@@ -50,4 +51,11 @@ model Stats {
   goal     Float
 
   @@index([platform])
+}
+
+model RouteTracking {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  route     String
+  timestamp DateTime @default(now())
+  count     Int
 }
