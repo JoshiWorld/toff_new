@@ -31,8 +31,12 @@ export async function middleware(req: NextRequest) {
     if (
       !pathname.startsWith("/api") &&
       !pathname.startsWith("/admin") &&
+      !pathname.startsWith("/login") &&
       !pathname.endsWith(".jpg") &&
       !pathname.endsWith(".png") &&
+      !pathname.endsWith(".js") &&
+      !pathname.endsWith(".ts") &&
+      !pathname.endsWith(".map") &&
       !pathname.endsWith(".ico") &&
       !pathname.endsWith(".mp4") &&
       !pathname.startsWith("/_next")

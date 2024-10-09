@@ -12,6 +12,8 @@ import Image from "next/image";
 import { format } from "date-fns";
 import prisma from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "TOFF Live",
   description:

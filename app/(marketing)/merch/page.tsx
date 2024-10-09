@@ -13,6 +13,8 @@ import { format } from "date-fns";
 import prisma from "@/lib/prisma";
 import { MerchCard } from "@/components/merch-card";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "TOFF Merch",
   description: "Aktuelle Merch Einträge von TOFF",
