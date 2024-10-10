@@ -32,6 +32,9 @@ export async function GET(
       where: {
         timestamp: new Date(today.setHours(0, 0, 0, 0)),
         link: { id: data.id },
+        country: country!,
+        city: city!,
+        linkType: device!
       },
     });
 

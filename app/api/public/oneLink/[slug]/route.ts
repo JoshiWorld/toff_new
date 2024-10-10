@@ -1,37 +1,33 @@
-import { RouteTracking } from "@prisma/client";
+import { Link } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-// Get Date RouteTrack Entry
+// Get Live Entry
 export async function GET(
   req: Request,
   { params }: { params: { slug: string } }
 ) {
   try {
     const { slug } = params;
-    const today = new Date(slug);
 
-    const data: RouteTracking[] = await prisma.routeTracking.findMany({
+    const data: Link | null = await prisma.link.findFirst({
       where: {
-        timestamp: new Date(today.setHours(0, 0, 0, 0)),
-      },
-      orderBy: {
-        timestamp: "asc",
+        id: slug,
       },
       cacheStrategy: { ttl: 60 },
     });
 
     if (!data) {
-      return NextResponse.json({ error: "RouteTracking not found" }, { status: 404 });
+      return NextResponse.json({ error: "Link not found" }, { status: 404 });
     }
 
     return NextResponse.json(data);
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch RouteTracking" },
+      { error: "Failed to fetch link blog" },
       { status: 500 }
     );
   }

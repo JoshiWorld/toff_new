@@ -176,86 +176,31 @@ const LinkItem = ({
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <div
-          className="mb-8 w-full cursor-pointer rounded-lg bg-white p-4 shadow-input dark:bg-neutral-900"
-          onClick={() => {}}
-        >
-          <div className="flex items-start">
-            <div className="relative mr-4 mt-1 h-6 w-6 flex-shrink-0">
-              <IconChevronUp
-                className={cn(
-                  "absolute inset-0 h-6 w-6 transform text-black transition-all duration-200 dark:text-white",
-                  "rotate-90 scale-0"
-                )}
-              />
-              <IconChevronDown
-                className={cn(
-                  "absolute inset-0 h-6 w-6 rotate-90 scale-0 transform text-black transition-all duration-200 dark:text-white",
-                  "rotate-0 scale-100"
-                )}
-              />
-            </div>
-            <div>
-              <h3 className="text-lg font-medium text-neutral-700 dark:text-neutral-200">
-                {titleNew}
-              </h3>
-            </div>
-          </div>
-        </div>
-      </DialogTrigger>
-      <DialogContent>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="title">Titel</Label>
-          <Input
-            type="text"
-            id="title"
-            placeholder="Titel"
-            value={titleNew}
-            onChange={(e) => setTitleNew(e.target.value)}
+    <div
+      className="mb-8 w-full cursor-pointer rounded-lg bg-white p-4 shadow-input dark:bg-neutral-900"
+      onClick={() => router.push(`/admin/link/${id}`)}
+    >
+      <div className="flex items-start">
+        <div className="relative mr-4 mt-1 h-6 w-6 flex-shrink-0">
+          <IconChevronUp
+            className={cn(
+              "absolute inset-0 h-6 w-6 transform text-black transition-all duration-200 dark:text-white",
+              "rotate-90 scale-0"
+            )}
+          />
+          <IconChevronDown
+            className={cn(
+              "absolute inset-0 h-6 w-6 rotate-90 scale-0 transform text-black transition-all duration-200 dark:text-white",
+              "rotate-0 scale-100"
+            )}
           />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="route">Route</Label>
-          <Input
-            type="text"
-            id="route"
-            placeholder="Route"
-            value={routeNew}
-            onChange={(e) => setRouteNew(e.target.value)}
-          />
+        <div>
+          <h3 className="text-lg font-medium text-neutral-700 dark:text-neutral-200">
+            {titleNew}
+          </h3>
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="link">Link</Label>
-          <Input
-            type="text"
-            id="link"
-            placeholder="Link"
-            value={linkNew}
-            onChange={(e) => setLinkNew(e.target.value)}
-          />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Checkbox
-            id="active"
-            checked={activeNew}
-            onCheckedChange={(checked) => setActiveNew(Boolean(checked))}
-          />
-          <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Aktiv
-          </label>
-        </div>
-        <div className="flex justify-between">
-          <Button variant={"destructive"} onClick={deleteLink}>
-            Löschen
-          </Button>
-          <Button onClick={updateLink}>Speichern</Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 };

@@ -8,7 +8,6 @@ export default function LinkRoute({ params }: { params: { slug: string } }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Funktion, um Gerätetyp zu ermitteln
     const getDeviceType = () => {
       const userAgent = navigator.userAgent.toLowerCase();
       if (/mobile|android|iphone|ipad|phone/i.test(userAgent)) {
@@ -18,16 +17,15 @@ export default function LinkRoute({ params }: { params: { slug: string } }) {
       }
     };
 
-    // Funktion zur Abfrage von Geolocation über IPInfo API
     const fetchGeoLocation = async () => {
       try {
         const response = await fetch("https://ipinfo.io?token=999eaf392f5425");
         const data = await response.json();
-        const { city, country } = data; // Stadt und Land aus der API-Antwort
+        const { city, country } = data; 
         return { city, country };
       } catch (error) {
         console.error("Error fetching geolocation: ", error);
-        return { city: "Unknown", country: "Unknown" }; // Fallback
+        return { city: "Unknown", country: "Unknown" }; 
       }
     };
 
@@ -39,10 +37,9 @@ export default function LinkRoute({ params }: { params: { slug: string } }) {
         const id = match[2]; // z.B. '5ExETTpCaGBW2yMWoUTwH3'
         return `spotify:${type}:${id}`;
       }
-      return url; // Falls keine passende Umwandlung gefunden wurde
+      return url; 
     };
 
-    // Funktion, um Daten mit Geo- und Geräteinformationen abzurufen
     const fetchLinkWithHeaders = async () => {
       const { city, country } = await fetchGeoLocation();
       const deviceType = getDeviceType();
@@ -62,11 +59,9 @@ export default function LinkRoute({ params }: { params: { slug: string } }) {
 
           if(data && data.link) {
             if (deviceType === "Mobile") {
-              // Falls es sich um einen Spotify-Link handelt und wir auf Mobile sind
               const spotifyUri = convertToSpotifyUri(data.link);
               window.location.href = spotifyUri;
             } else {
-              // Für Desktop
               window.location.href = data.link;
             }
           }
@@ -77,7 +72,6 @@ export default function LinkRoute({ params }: { params: { slug: string } }) {
         });
     };
 
-    // Abruf mit Geo- und Geräteinformationen
     fetchLinkWithHeaders();
   }, [params.slug]);
 
