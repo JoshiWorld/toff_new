@@ -62,7 +62,7 @@ function RouteViews() {
     <div className="px-20 pt-10">
       <div className="flex py-5 justify-center">
         <h2 className="scroll-m-20 text-white border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-          PageViews
+          Statistiken
         </h2>
       </div>
       <RouteTrackingChart data={data} />

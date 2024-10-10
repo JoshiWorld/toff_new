@@ -39,8 +39,6 @@ type ChartConfig = {
 };
 
 export function RouteTrackingChart({ data }: { data: RouteTracking[] }) {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("count");
   const routes = data.reduce<string[]>((acc, entry) => {
     const route = entry.route;
     if (!acc.includes(route)) {
@@ -66,6 +64,8 @@ export function RouteTrackingChart({ data }: { data: RouteTracking[] }) {
       return acc;
     }, {} as ChartConfig),
   };
+
+  console.log(data.filter((track) => track.route === selectedRoute));
 
   return (
     <Card>
@@ -137,9 +137,9 @@ export function RouteTrackingChart({ data }: { data: RouteTracking[] }) {
               }
             />
             <Line
-              dataKey={activeChart}
+              dataKey="count"
               type="monotone"
-              stroke={chartConfig[activeChart]?.color || "#000"}
+              stroke={chartConfig[0]?.color || "#000"}
               strokeWidth={2}
               dot={false}
             />
