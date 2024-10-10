@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export default async function MerchPage() {
-  const items = await prisma.merch.findMany();
+  const items = await prisma.merch.findMany({ cacheStrategy: { ttl: 60 } });
 
   return (
     <div className="relative overflow-hidden py-20 md:py-0">

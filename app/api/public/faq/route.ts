@@ -7,12 +7,10 @@ export const dynamic = "force-dynamic";
 // Get FAQs
 export async function GET() {
   try {
-    const data: FAQ[] = await prisma.fAQ.findMany();
-    return NextResponse.json(data, {
-      headers: {
-        "Cache-Control": "no-store",
-      },
+    const data: FAQ[] = await prisma.fAQ.findMany({
+      cacheStrategy: { ttl: 60 },
     });
+    return NextResponse.json(data);
   } catch (error) {
     console.error(error);
     return NextResponse.json(

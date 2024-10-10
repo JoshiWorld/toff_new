@@ -82,8 +82,9 @@ export async function DELETE(req: Request) {
     const { _id } = await req.json();
     const live = await prisma.live.findFirst({
       where: {
-        id: _id
-      }
+        id: _id,
+      },
+      cacheStrategy: { ttl: 60 },
     });
 
     const oldImageKey = extractKeyFromUrl(live!.image);

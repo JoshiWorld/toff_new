@@ -18,8 +18,9 @@ export async function GET(
         timestamp: new Date(today.setHours(0, 0, 0, 0)),
       },
       orderBy: {
-        timestamp: "asc"
-      }
+        timestamp: "asc",
+      },
+      cacheStrategy: { ttl: 60 },
     });
 
     if (!data) {

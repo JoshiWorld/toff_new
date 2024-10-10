@@ -49,6 +49,7 @@ export async function middleware(req: NextRequest) {
           route: pathname,
           timestamp: new Date(today.setHours(0, 0, 0, 0)),
         },
+        cacheStrategy: { ttl: 60 },
       });
 
       if (!routeEntry) {

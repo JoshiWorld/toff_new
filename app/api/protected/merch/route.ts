@@ -82,6 +82,7 @@ export async function DELETE(req: Request) {
       where: {
         id: _id,
       },
+      cacheStrategy: { ttl: 60 },
     });
 
     const oldImageKeyFront = extractKeyFromUrl(merch!.frontImage);

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ArticlesIndex() {
-  const items = await prisma.live.findMany();
+  const items = await prisma.live.findMany({ cacheStrategy: { ttl: 60 } });
 
   return (
     <div className="relative overflow-hidden py-20 md:py-0">

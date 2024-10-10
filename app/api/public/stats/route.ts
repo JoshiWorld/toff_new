@@ -7,12 +7,10 @@ export const dynamic = "force-dynamic";
 // Get Stats
 export async function GET() {
   try {
-    const data: Stats[] = await prisma.stats.findMany();
-    return NextResponse.json(data, {
-      headers: {
-        "Cache-Control": "no-store",
-      },
+    const data: Stats[] = await prisma.stats.findMany({
+      cacheStrategy: { ttl: 60 },
     });
+    return NextResponse.json(data);
   } catch (error) {
     console.error(error);
     return NextResponse.json(
