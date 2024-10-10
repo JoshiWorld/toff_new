@@ -20,7 +20,6 @@ export async function GET() {
       orderBy: {
         timestamp: "asc",
       },
-      cacheStrategy: { ttl: 60 },
     });
 
     if (!data) {
@@ -30,11 +29,7 @@ export async function GET() {
       );
     }
 
-    return NextResponse.json(data, {
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+    return NextResponse.json(data);
   } catch (error) {
     console.error(error);
     return NextResponse.json(

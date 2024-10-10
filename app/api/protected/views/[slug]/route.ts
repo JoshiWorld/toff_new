@@ -20,7 +20,6 @@ export async function GET(
       orderBy: {
         timestamp: "asc",
       },
-      cacheStrategy: { ttl: 60 },
     });
 
     if (!data) {
