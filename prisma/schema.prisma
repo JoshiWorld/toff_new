@@ -59,3 +59,23 @@ model RouteTracking {
   timestamp DateTime @default(now())
   count     Int
 }
+
+model Link {
+  id     String         @id @default(auto()) @map("_id") @db.ObjectId
+  title  String
+  route  String         @unique
+  link   String
+  active Boolean        @default(true)
+  stats  LinkTracking[]
+}
+
+model LinkTracking {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  link      Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  linkId    String   @db.ObjectId
+  timestamp DateTime @default(now())
+  linkType  String
+  count     Int
+  country   String
+  city      String
+}

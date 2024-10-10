@@ -92,6 +92,11 @@ const grid = [
     description: "Hier kannst du deinen Merch bearbeiten",
     link: "/admin/merch",
   },
+  {
+    title: "Links",
+    description: "Hier kannst du deine Deeplinks bearbeiten",
+    link: "/admin/link",
+  },
 ];
 
 export const Grid = ({

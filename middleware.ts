@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
-import clientPromise from "@/lib/mongodb";
 import prisma from "./lib/prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
@@ -32,6 +31,7 @@ export async function middleware(req: NextRequest) {
       !pathname.startsWith("/api") &&
       !pathname.startsWith("/admin") &&
       !pathname.startsWith("/login") &&
+      !pathname.startsWith("/link") &&
       !pathname.endsWith(".jpg") &&
       !pathname.endsWith(".png") &&
       !pathname.endsWith(".js") &&
@@ -71,6 +71,11 @@ export async function middleware(req: NextRequest) {
         });
       }
     }
+
+    // if(pathname.startsWith("/link")) {
+    //   console.log(req.geo?.country);
+    //   console.log(req.geo?.city);
+    // }
   }
 
   return NextResponse.next();
