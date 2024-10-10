@@ -14,6 +14,8 @@ import { TestimonialsSlider } from "@/components/testimonials/slider";
 import { Tools } from "@/components/tools";
 import { IconReceiptFilled } from "@tabler/icons-react";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <div className="relative overflow-hidden">
