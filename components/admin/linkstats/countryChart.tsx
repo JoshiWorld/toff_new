@@ -45,7 +45,7 @@ const getRandomColor = () => {
   return randomColor;
 };
 
-export function DeviceChart({ trackings }: { trackings: LinkTracking[] }) {
+export function CountryChart({ trackings }: { trackings: LinkTracking[] }) {
   const totalVisitors = React.useMemo(() => {
     return trackings.reduce((acc, curr) => acc + curr.count, 0);
   }, [trackings]);
@@ -76,7 +76,7 @@ export function DeviceChart({ trackings }: { trackings: LinkTracking[] }) {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Geräte</CardTitle>
+        <CardTitle>Länder</CardTitle>
         <CardDescription>Der letzten 3 Monate</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -118,7 +118,7 @@ export function DeviceChart({ trackings }: { trackings: LinkTracking[] }) {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Aufrufe
+                          Visitors
                         </tspan>
                       </text>
                     );
