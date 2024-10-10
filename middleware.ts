@@ -39,6 +39,7 @@ export async function middleware(req: NextRequest) {
       !pathname.endsWith(".map") &&
       !pathname.endsWith(".ico") &&
       !pathname.endsWith(".mp4") &&
+      !pathname.endsWith(".txt") &&
       !pathname.startsWith("/_next")
     ) {
       if(pathname === "/") pathname = "/startseite";
