@@ -33,7 +33,9 @@ export async function middleware(req: NextRequest) {
       !pathname.startsWith("/login") &&
       !pathname.startsWith("/link") &&
       !/\.\w+$/.test(pathname) && // Überprüft, ob der Pfad auf eine Dateiendung endet
-      !pathname.startsWith("/_next")
+      !pathname.startsWith("/_next") &&
+      !pathname.startsWith("/musik") &&
+      !pathname.startsWith("/#")
     ) {
       if (pathname === "/") pathname = "/startseite";
       const today = new Date();
