@@ -38,12 +38,16 @@ export async function middleware(req: NextRequest) {
       !pathname.startsWith("/#")
     ) {
       if (pathname === "/") pathname = "/startseite";
-      const today = new Date();
+      const todayStart = new Date(new Date().setHours(0, 0, 0, 0));
+      const todayEnd = new Date(new Date().setHours(23, 59, 59, 999));
 
       const routeEntry = await prisma.routeTracking.findFirst({
         where: {
           route: pathname,
-          timestamp: new Date(today.setHours(0, 0, 0, 0)),
+          timestamp: {
+            gte: todayStart,
+            lt: todayEnd,
+          },
         },
         cacheStrategy: { ttl: 60 },
       });
@@ -51,7 +55,7 @@ export async function middleware(req: NextRequest) {
       if (!routeEntry) {
         await prisma.routeTracking.create({
           data: {
-            timestamp: new Date(today.setHours(0, 0, 0, 0)),
+            timestamp: todayStart,
             route: pathname,
             count: 1,
           },
