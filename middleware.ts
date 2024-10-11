@@ -32,17 +32,10 @@ export async function middleware(req: NextRequest) {
       !pathname.startsWith("/admin") &&
       !pathname.startsWith("/login") &&
       !pathname.startsWith("/link") &&
-      !pathname.endsWith(".jpg") &&
-      !pathname.endsWith(".png") &&
-      !pathname.endsWith(".js") &&
-      !pathname.endsWith(".ts") &&
-      !pathname.endsWith(".map") &&
-      !pathname.endsWith(".ico") &&
-      !pathname.endsWith(".mp4") &&
-      !pathname.endsWith(".txt") &&
+      !/\.\w+$/.test(pathname) && // Überprüft, ob der Pfad auf eine Dateiendung endet
       !pathname.startsWith("/_next")
     ) {
-      if(pathname === "/") pathname = "/startseite";
+      if (pathname === "/") pathname = "/startseite";
       const today = new Date();
 
       const routeEntry = await prisma.routeTracking.findFirst({
